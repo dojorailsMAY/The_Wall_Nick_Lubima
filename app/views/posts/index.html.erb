@@ -1,0 +1,51 @@
+<% if flash[:errors] %>
+  <% flash[:errors].each do |e| %>
+    <p><%= e %></p>
+  <% end %>
+<% end %>
+<h1><%= session[:current_user_name]%>'s Wall</h1>
+<a href='/users/logout'>Logout</a><br><br>
+<div id="new-post">
+    <form action="/posts" method="post">
+         Write a post:<br>
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <textarea name="message"></textarea><br>
+        <button type="submit">Submit</button><br><br>  
+    </form>
+
+</div>
+
+
+<% @posts.each do |post| %>
+    <div class="post">
+
+        <div class="message">
+            <%= post.message %><br>
+            posted by: <%= post.user.username %><br><br>
+        </div>
+
+        <div class="comments-box">
+
+            <% @comments.each do |comment| %>
+                <% if comment.post == post %>
+                <div class="comment">
+                    <%= comment.message %><br>
+                    posted by: <%= comment.user.username%><br><br>
+                </div>
+                <% end %>
+            <% end %>
+
+        </div>
+
+        <div class="new-comment">
+            <form action="posts/<%= post.id %>/comments" method="post">
+                <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                Write a comment for this post:<br>
+                <textarea name="message"></textarea><br>
+                <button type="submit">Submit</button><br>
+            </form>
+
+        </div>
+
+    </div>
+<% end %>
