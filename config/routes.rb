@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root 'posts#index'
 
   post 'posts/:post_id/comments'=> 'comments#create'
 

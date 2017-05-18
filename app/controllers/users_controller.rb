@@ -5,8 +5,8 @@ class UsersController < ApplicationController
   def login
     @user = User.find_by(user_params)
     if @user
-      session[:current_user] = @user.id
-      session[:current_user_name] = @user.username
+      session[:current_user] = @user.id  # I would call `:user_id`
+      session[:current_user_name] = @user.username  # Always match names, unless completely changing (user_name => username)
       redirect_to '/posts'
     else
       flash[:errors] = ["User not found. Please, register!"]
@@ -30,14 +30,14 @@ class UsersController < ApplicationController
           flash[:errors] = ["Passwords don't match!"]
         end
         redirect_to '/users'
-      else
-        @user = User.create(user_params)
-        session[:current_user] = @user.id
-        session[:current_user_name] = @user.username
-        redirect_to '/posts'
       end
-      
+    else
+      @user = User.create(user_params)
+      session[:current_user] = @user.id
+      session[:current_user_name] = @user.username
+      redirect_to '/posts'
     end
+      
     
   end
 

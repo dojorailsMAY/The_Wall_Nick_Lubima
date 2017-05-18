@@ -1,9 +1,11 @@
+<!-- MOVE to application.html.erb or custom layout
 <% if flash[:errors] %>
   <% flash[:errors].each do |e| %>
     <p><%= e %></p>
   <% end %>
 <% end %>
-<h1><%= session[:current_user_name]%>'s Wall</h1>
+
+ --><h1><%= session[:current_user_name]%>'s Wall</h1>
 <a href='/users/logout'>Logout</a><br><br>
 <div id="new-post">
     <form action="/posts" method="post">
@@ -25,7 +27,7 @@
         </div>
 
         <div class="comments-box">
-
+            <!-- post.comments.each ..  -->
             <% @comments.each do |comment| %>
                 <% if comment.post == post %>
                 <div class="comment">
